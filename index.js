@@ -16,15 +16,16 @@ const client = twilio(accountSid, authToken);
 // Endpoint to send OTP
 app.post('/api/send-otp', (req, res) => {
   const { phoneNumber } = req.body;
-
+  console.log(phoneNumber);
   client.verify.v2.services(verifySid)
-    .verifications.create({ to: phoneNumber, channel: 'sms' })
+    .verifications.create({ to: "+212606060481", channel: 'sms' })
     .then(verification => {
       res.status(200).json({ status: verification.status });
     })
     .catch(error => {
       res.status(500).json({ error: error.message });
     });
+    res.send('api phone!');
 });
 
 app.listen(port, () => {
@@ -33,4 +34,8 @@ app.listen(port, () => {
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
+});
+
+app.get('/test', (req, res) => {
+  res.send('test World!');
 });
