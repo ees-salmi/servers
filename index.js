@@ -1,4 +1,27 @@
-require('dotenv').config();
+const { SinchClient} = require("@sinch/sdk-core");
+
+const sinchClient = new SinchClient({
+  projectId: process.env.PROJECTID,
+  keyId: process.env.ACCESSKEY,
+  keySecret: process.env.ACCESSSECRET
+});
+async function run(){
+    const response = await sinchClient.sms.batches.send({
+        sendSMSRequestBody: {
+            to: [
+                "YOUR_to_number"
+            ],
+            from: "YOUR_sinch_number",
+            body: "This is a test message using the Sinch Node.js SDK."
+        }
+    });
+
+    console.log(JSON.stringify(response));
+}
+run();
+
+
+/*require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -55,3 +78,4 @@ app.get('/verify-otp', (req, res) => {
           res.status(500).send('Error verifying OTP');
       });
 });
+*/
