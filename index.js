@@ -48,6 +48,7 @@ const client = twilio(accountSid, authToken);
 app.post('/api/send-otp', (req, res) => {
   const { phoneNumber } = req.body;
   console.log(phoneNumber);
+  if (phoneNumber.length() == 13 && phoneNumber.startsWith("+212")) {
   client.verify.v2.services(verifySid)
     .verifications.create({ to: phoneNumber, channel: 'sms' })
     .then(verification => {
@@ -56,6 +57,7 @@ app.post('/api/send-otp', (req, res) => {
     .catch(error => {
       res.status(500).json({ error: error.message });
     });
+  }
 });
 
 app.listen(port, () => {
@@ -63,7 +65,7 @@ app.listen(port, () => {
 });
 
 app.get('/', (req, res) => {
-  res.send('Hello World!!!!');
+  res.send('Hello Worlds');
 });
 
 app.get('/test', (req, res) => {
