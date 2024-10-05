@@ -1,27 +1,35 @@
-const { SinchClient} = require("@sinch/sdk-core");
+
+/*const { SinchClient} = require("@sinch/sdk-core");
+require('dotenv').config();
+const fastify = require('fastify');
+const portAddr = 3000;
 
 const sinchClient = new SinchClient({
   projectId: process.env.PROJECTID,
   keyId: process.env.ACCESSKEY,
   keySecret: process.env.ACCESSSECRET
 });
-async function run(){
-    const response = await sinchClient.sms.batches.send({
+
+fastify().post('/', async (request, reply) => {
+    let message = request.body;
+    let response = await sinchClient.sms.batches.send({
         sendSMSRequestBody: {
             to: [
-                "YOUR_to_number"
+                "+212606060481"
             ],
-            from: "YOUR_sinch_number",
-            body: "This is a test message using the Sinch Node.js SDK."
+            from: "+447441421154",
+            body: "You sente test  ",
         }
     });
-
     console.log(JSON.stringify(response));
-}
-run();
+    reply.type('application/json').code(200);
+});
 
+fastify().listen({ port: portAddr }, () => {
+    console.log(`Listening at http://localhost:${portAddr}`);
+});*/
 
-/*require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -37,7 +45,7 @@ const verifySid = process.env.TWILIO_VERIFY_SID;
 const client = twilio(accountSid, authToken);
 
 // Endpoint to send OTP
-app.get('/api/send-otp', (req, res) => {
+app.post('/api/send-otp', (req, res) => {
   const { phoneNumber } = req.body;
   console.log(phoneNumber);
   client.verify.v2.services(verifySid)
@@ -78,4 +86,3 @@ app.get('/verify-otp', (req, res) => {
           res.status(500).send('Error verifying OTP');
       });
 });
-*/
